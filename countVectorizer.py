@@ -6,7 +6,6 @@ from pyspark.ml.feature import CountVectorizer
 from pyspark.ml.classification import RandomForestClassifier
 import pandas as pd
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
-import time
  
 categories_ = ["rec.autos", "rec.sport.baseball", "sci.electronics", "sci.med", "sci.space"] 
 newsgroups_train = fetch_20newsgroups(subset='train', categories=categories_)
@@ -29,7 +28,6 @@ def preTextProcessing(amount, dataset):
     
 if __name__ == "__main__":
     # Crea un SparkContext
-    start_time = time.time()
     sc = SparkContext(appName="BigdataProject")
     spark = SparkSession(sc)
 
@@ -60,6 +58,5 @@ if __name__ == "__main__":
         labelCol="target", predictionCol="prediction", metricName="accuracy")
     accuracy = evaluator.evaluate(predictions)
     print("Test Error = %g" % (1.0 - accuracy))
-    print("--- %s seconds ---" % (time.time() - start_time))
 
     
